@@ -5,7 +5,7 @@ public class Distant {
     static Process startDistant(String machine, String command) throws IOException {
         String[] cmd = {"sh", "-c", "ssh -o ConnectTimeout=1 abonetti@"+machine+" '"+command+"'"};
         ProcessBuilder pb = new ProcessBuilder(cmd);
-        pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        pb.redirectOutput(ProcessBuilder.Redirect.PIPE);
         pb.redirectErrorStream();
         //start process and retrieve exit code to see if connection succeeded after exit
         return pb.start();
@@ -22,9 +22,10 @@ public class Distant {
         ArrayList<String> machinesUp = new ArrayList<String>();
         for(String machine : machines) {
             System.out.print("Trying machine " + machine + " ... ");
-            if (execDistant(machine, "echo ok"))
+            if (execDistant(machine, "echo ok")) {
                 machinesUp.add(machine);
-            else
+                System.out.println("OK");
+            } else
                 System.out.println("NO");
         }
         return  machinesUp.toArray(new String[machinesUp.size()]);
