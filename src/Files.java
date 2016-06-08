@@ -20,7 +20,7 @@ public class Files {
             out.println(machine);
         out.close();
     }
-    static void splitInput(String inputFilename) throws IOException {
+    static int splitInput(String inputFilename) throws IOException {
         String[] lines = getLines(inputFilename);
         int i = 0;
         for (String line : lines){
@@ -28,5 +28,6 @@ public class Files {
             out.println(line);
             out.close();
         }
+        return lines.length;
     }
 }
